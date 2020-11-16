@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest test",
+    "build": "tsc -p .",
     "start": "ts-node src/index.ts",
     "start:worker": "ts-node src/worker.ts",
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts"
