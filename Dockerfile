@@ -17,4 +17,4 @@ EXPOSE 3000
 # Show current folder structure in logs
 RUN ls -al -R
 
-CMD [ "pm2-runtime", "start", "app.yml" ]
+CMD [ "pm2-runtime", "start", "app.yml", "--no-autorestart" ]

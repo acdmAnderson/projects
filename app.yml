@@ -1,9 +1,8 @@
 apps:
-  - script   : ./dist/index.js
-    name     : 'api-app'    
-  - script : ./dist/worker.js
-    name   : 'worker'
-    watch  : true
+  - script   : ./dist/worker.js
+    name     : 'worker'    
+    instances: 4
+    exec_mode: cluster      
     env    :
       NODE_ENV: development
     env_production:

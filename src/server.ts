@@ -6,8 +6,10 @@ const fibonacci: Fibonacci = new Fibonacci();
 
 server.get('/', (req: any, res: Response) => {
     console.log(`Worker ${process.pid} called`);
+    const start = Date.now();
     const { position }: { position: number } = req.query;
-    res.status(200).send(`${fibonacci.find(position)}`);
+    const fibonacciValue = fibonacci.find(position);
+    res.status(200).send(`Fibonacci[${Date.now() - start}ms] = ${fibonacciValue}`);
 });
 
 export default server;
