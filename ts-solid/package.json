@@ -1,0 +1,17 @@
+{
+  "name": "ts-solid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {    
+    "build":"webpack"
+  },
+  "author": "Anderson",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^8.0.5",
+    "typescript": "^4.0.3",
+    "webpack": "^5.1.3",
+    "webpack-cli": "^4.1.0"
+  }
+}
