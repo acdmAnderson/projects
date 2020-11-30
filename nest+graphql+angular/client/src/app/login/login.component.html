@@ -1,9 +1,24 @@
-<div class="content">
-    <div class="form">
-        <label>Username</label>
-        <input placeholder="user" required />
-        <label>Password</label>
-        <input placeholder="password" required />
-    </div>
-    <button class="btn" type="button">Logar</button>
+<div class="login">
+    <form>
+        <div class="imgcontainer">
+            <img src="/assets/img/avatar.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="content">
+            <label for="user">Username</label>
+            <input placeholder="Entre com seu usuário" required name="user" type="text" />
+            <label for="password">Password</label>
+            <input placeholder="Entre com a sua senha" type="password" required name="password" />
+            <button class="btn" type="button">Logar</button>
+            <div>
+                <span class="accout-link">
+                    Ainda não é cadastrado? Então crie sua <a href="#">conta</a>!
+                </span>
+            </div>
+            <div>
+                <span class="forgot-link">
+                    Esqueceu seu <a href="#">password</a>?
+                </span>
+            </div>
+        </div>
+    </form>
 </div>
