@@ -1,14 +1,14 @@
 <div class="login">
-    <form>
+    <form [formGroup]="loginForm">
         <div class="imgcontainer">
             <img src="/assets/img/avatar.png" alt="Avatar" class="avatar">
         </div>
         <div class="content">
             <label for="user">Username</label>
-            <input placeholder="Entre com seu usuário" required name="user" type="text" />
+            <input placeholder="Entre com seu usuário" formControlName="username" type="text" />
             <label for="password">Password</label>
-            <input placeholder="Entre com a sua senha" type="password" required name="password" />
-            <button class="btn" type="button">Logar</button>
+            <input placeholder="Entre com a sua senha" type="password" formControlName="password" />
+            <button [disabled]="!loginForm.valid" (click)="login(loginForm.value)"class="btn" type="button">Logar</button>
             <div>
                 <span class="accout-link">
                     Ainda não é cadastrado? Então crie sua <a href="#">conta</a>!
