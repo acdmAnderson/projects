@@ -6,6 +6,8 @@ import { LoginModule } from './components/login/login.module';
 import { AuthService } from './services/auth/auth.service';
 import { MainComponent } from './components/main/main.component';
 import { RegisterModule } from './components/register/register.module';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -14,7 +16,7 @@ import { RegisterModule } from './components/register/register.module';
     BrowserModule,
     AppRoutingModule,
     LoginModule,   
-    RegisterModule
+    RegisterModule, GraphQLModule, HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService],
