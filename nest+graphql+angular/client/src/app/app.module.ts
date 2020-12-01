@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './components/login/login.module';
 import { AuthService } from './services/auth/auth.service';
 import { MainComponent } from './components/main/main.component';
+import { RegisterModule } from './components/register/register.module';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { MainComponent } from './components/main/main.component';
     BrowserModule,
     AppRoutingModule,
     LoginModule,   
+    RegisterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService],

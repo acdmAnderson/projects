@@ -10,10 +10,11 @@ export class AuthService {
   private users: Array<User> = [];
   constructor(private router: Router) {
     this.users.push({
-      firstName: "teste",
-      lastName: "dois",
+      firstName: 'teste',
+      lastName: 'dois',
+      email: '',
       isActive: true,
-      password: "master"
+      password: 'master'
     })
   }
 
@@ -35,5 +36,10 @@ export class AuthService {
 
   public handleRoute(path: string): void {
     this.router.navigate(['/login', btoa(path)]);
+  }
+
+  public logout(): void {
+    localStorage.removeItem('username');
+    this.handleRoute('/login');
   }
 }

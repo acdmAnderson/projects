@@ -1,4 +1,4 @@
-.login {
+.register {
   width: 600px;
   height: 100%;
   margin: auto;
@@ -10,10 +10,6 @@
 }
 
 img.avatar {
-  width: 40%;
+  width: 20%;
   border-radius: 50%;
-}
-
-button{
-  width: 100%;
 }

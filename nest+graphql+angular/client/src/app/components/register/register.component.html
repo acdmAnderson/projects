@@ -1,0 +1,23 @@
+<div class="register">
+    <form [formGroup]="registerForm">
+        <div class="imgcontainer">
+            <img src="/assets/img/avatar.png" alt="Avatar" class="avatar">
+        </div>
+        {{registerForm.valid | json}}
+        <div class="content">
+            <label for="user">Primeiro nome</label>
+            <input placeholder="Entre com seu usuário" formControlName="firstName" type="text" />
+            <label for="password">Sobrenome</label>
+            <input placeholder="Entre com o seu sobrenome" type="text" formControlName="lastName" />
+            <label for="user">Email</label>
+            <input placeholder="Entre com seu email" formControlName="email" type="text" />
+            <label for="password">Password</label>
+            <input placeholder="Entre com a sua senha" type="password" formControlName="password" />
+            <button [disabled]="!registerForm.valid" type="submit" (click)="createUser(registerForm.value)">Salvar
+            </button>
+            <button class="btn-cancel to-right" type="button" (click)="cancel()">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>

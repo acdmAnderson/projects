@@ -11,12 +11,12 @@
             <button [disabled]="!loginForm.valid" (click)="login(loginForm.value)"class="btn" type="button">Logar</button>
             <div>
                 <span class="accout-link">
-                    Ainda não é cadastrado? Então crie sua <a href="#">conta</a>!
+                    Ainda não é cadastrado? Então crie sua <a [routerLink]="['/register']">conta</a>!
                 </span>
             </div>
             <div>
                 <span class="forgot-link">
-                    Esqueceu seu <a href="#">password</a>?
+                    Esqueceu seu <a [routerLink]="['/recover/password']">password</a>?
                 </span>
             </div>
         </div>
