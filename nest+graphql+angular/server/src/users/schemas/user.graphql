@@ -3,12 +3,13 @@ type User{
     firstName: String!
     lastName: String!
     email: String!
+    password: String!
     isActive: Boolean
 }
 
 type Query{
     getUsers: [User]
-    user(id: Int!): User
+    user(email: String!): User
 }
 
 type Mutation{
@@ -19,6 +20,7 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   email: String!
+  password: String!
   isActive: Boolean
 }
 

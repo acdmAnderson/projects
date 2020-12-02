@@ -3,7 +3,7 @@ export interface BaseService<T> {
 
     findAll(): Promise<Array<T>>;
 
-    findOne(id: number): Promise<T>;
+    findOne(email: string): Promise<T>;
     
     remove(id: number): Promise<boolean>;
 }

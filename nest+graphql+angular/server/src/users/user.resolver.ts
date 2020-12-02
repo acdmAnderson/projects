@@ -7,8 +7,8 @@ export class UserResolver {
     constructor(private userService: UserService) { }
 
     @Query()
-    async user(@Args('id') id: number): Promise<UserDTO> {
-        return this.userService.findOne(id);
+    async user(@Args('email') email: string): Promise<UserDTO> {
+        return this.userService.findOne(email);
     }
 
     @Query()

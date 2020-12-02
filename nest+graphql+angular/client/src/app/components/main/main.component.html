@@ -1,5 +1,5 @@
 <div class="main">
-    <h1>{{ userLogged.firstName }}</h1>
+    <h1>{{ userLogged?.firstName }}</h1>
     <h3>
         <hr>
         <strong>
@@ -7,15 +7,4 @@
         </strong>
         <button type="button" class="btn-logout to-right" (click)="logout()">Logout</button>
     </h3>
-    <ul>
-        <li>
-            {{rates | json}}
-        </li>
-        <li>
-            {{loading | json}}
-        </li>
-        <li>
-            {{error | json}}
-        </li>
-    </ul>
 </div>

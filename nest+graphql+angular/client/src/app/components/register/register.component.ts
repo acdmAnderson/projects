@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FetchResult } from '@apollo/client/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { User } from 'src/app/models';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -9,10 +12,15 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   public registerForm: FormGroup;
-  constructor(private readonly router: Router, private readonly userService: UserService) { }
+
+  //private
+  private unsubscribeAll: Subject<any>;
+  constructor(private readonly router: Router, private readonly userService: UserService) {
+    this.unsubscribeAll = new Subject();
+  }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -23,9 +31,21 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribeAll.next();
+    this.unsubscribeAll.complete();
+  }
+
   public createUser(data: User): void {
-    this.userService.createUser(data);
-    this.redirectToLogin();
+    this.userService
+      .createUser(data)
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe((res: FetchResult<User>) => {
+        console.log(res.data);
+        this.redirectToLogin();
+      }, (error: any) => {
+        console.log(error);
+      });    
   }
 
   public cancel(): void {

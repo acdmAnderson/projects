@@ -11,9 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit, OnDestroy {
-  public rates: any[];
-  public loading = true;
-  public error: any;
+  
   public userLogged: User;
 
   //private
@@ -24,14 +22,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userLogged = this.authService.userLogged;
-    this.userService
-    .watchQuery()
-    .pipe(takeUntil(this.unsubscribeAll))
-    .subscribe((result: any) => {
-      this.rates = result.data && result.data.rates;
-      this.loading = result.loading;
-      this.error = result.error;
-    });
   }
 
   ngOnDestroy(): void {

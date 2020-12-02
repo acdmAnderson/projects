@@ -14,6 +14,9 @@ export class UserDTO{
     @IsEmail()
     public readonly email!: string;
 
+    @IsString()
+    public readonly password!: string;
+
     @IsBoolean()
     @IsOptional()
     public readonly isActive?: boolean;

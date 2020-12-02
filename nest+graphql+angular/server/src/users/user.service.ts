@@ -15,8 +15,8 @@ export class UserService implements BaseService<UserDTO> {
     public findAll(): Promise<UserDTO[]> {
         return this.userRepository.find();
     }
-    public findOne(id: number): Promise<UserDTO> {
-        return this.userRepository.findOne(id);
+    public findOne(email: string): Promise<UserDTO> {
+        return this.userRepository.findOne({where: {email}});
     }
     public async remove(id: number): Promise<boolean> {
         const result: DeleteResult = await this.userRepository.delete(id);

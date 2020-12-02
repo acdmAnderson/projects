@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { Login } from 'src/app/models';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -9,32 +10,49 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   public loginForm: FormGroup;
+
+  //private
+  private unsubscribeAll: Subject<any>;
 
   constructor(
     private authService: AuthService,
     private route: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) {
+    this.unsubscribeAll = new Subject();
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    if (this.authService.isLogged()) this.doNavigate();
+    this.authService.isLogged()
+    .subscribe((canLogin: boolean) => {
+      if(canLogin){
+        this.doNavigate();
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeAll.next();
+    this.unsubscribeAll.complete();
   }
 
   public login(value: Login): void {
-    const canLogin = this.authService.doLogin(value)
-    if (canLogin) {
-      this.doNavigate();
-    }
+    this.authService.doLogin(value)
+      .subscribe((canLogin: boolean) => {
+        if (canLogin) {
+          this.doNavigate();
+        }
+      });
   }
 
   private async doNavigate(): Promise<void> {
-    await this.route.navigate([atob(this.activatedRoute.snapshot.params.to || btoa('')) ]);
+    await this.route.navigate([atob(this.activatedRoute.snapshot.params.to || btoa(''))]);
   }
 
 }
