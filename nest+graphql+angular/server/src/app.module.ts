@@ -4,10 +4,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     ConfigModule.forRoot(
       {
         isGlobal: true,
@@ -34,6 +36,7 @@ import { UserModule } from './users/user.module';
       debug: false,
      typePaths: ['./**/*.graphql']
     }),
+
   ],
 })
 export class AppModule { }
