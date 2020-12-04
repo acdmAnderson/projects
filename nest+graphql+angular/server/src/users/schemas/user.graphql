@@ -10,6 +10,7 @@ type User{
 type Query{
     getUsers: [User]
     user(email: String!): User
+    login(email: String!, password: String!): User
 }
 
 type Mutation{

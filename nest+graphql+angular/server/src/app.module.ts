@@ -36,7 +36,7 @@ import { AuthModule } from './auth/auth.module';
       debug: false,
      typePaths: ['./**/*.graphql']
     }),
-
   ],
+  providers: [],
 })
 export class AppModule { }
