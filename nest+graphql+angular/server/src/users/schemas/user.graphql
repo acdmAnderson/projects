@@ -1,20 +1,20 @@
-type User{
-    id: Int
-    firstName: String!
-    lastName: String!
-    email: String!
-    password: String!
-    isActive: Boolean
+type User {
+  id: Int
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  isActive: Boolean
 }
 
-type Query{
-    getUsers: [User]
-    user(email: String!): User
-    login(email: String!, password: String!): User
+type Query {
+  getUsers: [User]
+  user(email: String!): User
+  login(loginUserInput: LoginUserInput!): User
 }
 
-type Mutation{
-    createUser(createUserInput: CreateUserInput): User   
+type Mutation {
+  createUser(createUserInput: CreateUserInput): User
 }
 
 input CreateUserInput {
@@ -25,4 +25,7 @@ input CreateUserInput {
   isActive: Boolean
 }
 
-
+input LoginUserInput {
+  email: String!
+  password: String!
+}
