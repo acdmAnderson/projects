@@ -1,18 +1,13 @@
-import { UseGuards } from '@nestjs/common';
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { CurrentUser } from 'src/users/current-user.model';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { UserDTO } from 'src/users/models/user.dto';
-import { UserService } from 'src/users/user.service';
-import { LocalAuthGuard } from './local-auth.guard';
+import { AuthService } from './auth.service';
 
 @Resolver('Login')
 export class AuthResolver {
-    constructor(private userService: UserService) { }
+    constructor(private authService: AuthService) { }
 
-    @Query()
-    @UseGuards(LocalAuthGuard)
-    async login(@CurrentUser() user: {email: string, password: string}): Promise<UserDTO> {
-        console.log(user.email, user.password);
-        return this.userService.findOne(user.email);
+    @Mutation()
+    async login(@Args('loginUserInput') user: {email: string, password: string}): Promise<UserDTO> {
+        return this.authService.login(user);
     }
 }

@@ -9,12 +9,15 @@ type User {
 
 type Query {
   getUsers: [User]
-  user(email: String!): User
-  login(loginUserInput: LoginUserInput!): User
+  user(email: String!): User 
+}
+type Token {
+  access_token: String!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput): User
+  login(loginUserInput: LoginUserInput!): Token
 }
 
 input CreateUserInput {
