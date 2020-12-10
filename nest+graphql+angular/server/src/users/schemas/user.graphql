@@ -10,6 +10,7 @@ type User {
 type Query {
   getUsers: [User]
   user(email: String!): User 
+  whoAmI:User
 }
 type Token {
   access_token: String!
