@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { jwtSecret } from "./jwt";
@@ -15,14 +15,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     public async validate({ email, fistName, lastName, id, iat, exp }): Promise<any> {
-        if (this.sessionExpired(exp)) {
-            throw new UnauthorizedException(`Session Expired`);
-        }
         return { email, fistName, lastName, id, iat, exp };
     }
-
-    private sessionExpired(expireAt: number): boolean {
-        return Date.now() <= expireAt;
-    }
-
 }

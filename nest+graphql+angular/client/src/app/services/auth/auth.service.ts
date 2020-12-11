@@ -1,65 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApolloQueryResult, Observable } from '@apollo/client/core';
+import { FetchResult, Observable } from '@apollo/client/core';
 import { first } from 'rxjs/operators';
-import { Login, Response, User } from 'src/app/models';
+import { Login, User } from 'src/app/models';
+import { AuthToken } from 'src/app/models/token.model';
 import { UserService } from '../user/user.service';
+import * as JwtDecode from 'jwt-decode';
+import { AUTH_TOKEN } from 'src/properties';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public userLogged: User;
-  private readonly STORAGE_KEY = 'email';
   constructor(private readonly router: Router, private readonly userService: UserService) { }
 
   public doLogin(login: Login): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       this.userService
-        .fetchUser(login.email)
+        .login(login)
         .pipe((first()))
-        .subscribe((res: ApolloQueryResult<{ user: User }>) => {
-          const { user } = res.data;
-          const canLogin = user.password.includes(login.password);
-          if (canLogin) {
-            this.cacheUser(user.email);
-            this.userLogged = user;
-          }
-          observer.next(canLogin);
+        .subscribe((res: FetchResult<AuthToken>) => {
+          const { login } = res.data;
+          this.storageSession(login);
+          console.log(this.userLogged);
+          observer.next(true);
+          observer.complete();
+        }, (error: any) => {
+          observer.error(error);
           observer.complete();
         });
     });
   }
 
-  private cacheUser(email: string): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(email));
+  private decodeToken({ access_token }): User {
+    return JwtDecode.default(access_token);
+  }
+  private storageSession({ access_token }): void {
+    localStorage.setItem(AUTH_TOKEN, JSON.stringify(access_token));
   }
 
   public isLogged(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      const email = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
-      if (email) {
-        this.userService
-          .fetchUser(email)
-          .pipe((first()))
-          .subscribe((res: ApolloQueryResult<{ user: User }>) => {
-            console.log(res, email)
-            const { user } = res.data;
-            if (user) {
-              this.cacheUser(user.email);
-              this.userLogged = user;
-              observer.next(true);
-              observer.complete();
-            }
-            observer.next(false);
-            observer.complete();
-          });
-      } else {
-        observer.next(false);
-        observer.complete();
-      }
+      observer.next(this.storegeToken ? true : false);
+      observer.complete();
     });
+  }
+
+  public get storegeToken(): string{
+    return JSON.parse(localStorage.getItem(AUTH_TOKEN));
   }
 
   public handleRoute(path: string): void {
@@ -67,8 +56,11 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.userLogged = null;
-    localStorage.removeItem(this.STORAGE_KEY);
+    localStorage.removeItem(AUTH_TOKEN);
     this.handleRoute('/login');
+  }
+
+  public get userLogged(): User{
+    return this.decodeToken({access_token: this.storegeToken});
   }
 }

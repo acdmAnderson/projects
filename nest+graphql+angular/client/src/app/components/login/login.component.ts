@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (canLogin) {
           this.doNavigate();
         }
-      });
+      },(error: any) => console.error(error));
   }
 
   private async doNavigate(): Promise<void> {

@@ -1,24 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
-import { User } from 'src/app/models';
+import { Login, User } from 'src/app/models';
 import { Observable } from 'rxjs'
+import { AuthToken } from 'src/app/models/token.model';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private users: Array<User> = [];
-
-  private readonly FETCH_USER_QUERY = gql`
-    query FetchUser($email: String!){  
-      user(email: $email){
-        id
-        firstName
-        lastName
-        email
-        password
-        isActive      
+  private readonly LOGIN = gql`
+    mutation Login($loginUserInput: LoginUserInput!){  
+      login(loginUserInput: $loginUserInput){
+        access_token
       }    
     }`;
 
@@ -36,23 +30,7 @@ export class UserService {
       }
     }`;
 
-  constructor(private apollo: Apollo) {
-    // apollo.watchQuery({
-    //   query: gql`
-    //   query getUsers{
-    //     id
-    //     firstName
-    //     lastName
-    //     email
-    //     isActive
-    //   }
-    //   `
-    // }).valueChanges.subscribe((res)=> console.log(res));
-   }
-
-  public fetchUsers(params?: any): Array<User> {
-    return this.users;
-  }
+  constructor(private readonly apollo: Apollo) { }
 
   public createUser(createUserInput: User): Observable<FetchResult<User>> {
     return this.apollo.mutate({
@@ -63,13 +41,13 @@ export class UserService {
     });
   }
 
-  public fetchUser(email: string): Observable<ApolloQueryResult<{user: User}>> {
-    return this.apollo.watchQuery<{user: User}>({
-      query: this.FETCH_USER_QUERY,
+  public login(loginUserInput: Login): Observable<FetchResult<AuthToken>> {
+    return this.apollo.mutate<AuthToken>({
+      mutation: this.LOGIN,
       variables: {
-        email
+        loginUserInput
       }
-    }).valueChanges;
+    });
   }
 
 }
