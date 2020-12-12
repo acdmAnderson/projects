@@ -25,14 +25,13 @@ export class UserService {
         firstName
         lastName
         email
-        password
         isActive
       }
     }`;
 
   constructor(private readonly apollo: Apollo) { }
 
-  public createUser(createUserInput: User): Observable<FetchResult<User>> {
+  public createUser(createUserInput: User ): Observable<FetchResult<User>> {
     return this.apollo.mutate({
       mutation: this.CREATE_USER_QUERY,
       variables: {

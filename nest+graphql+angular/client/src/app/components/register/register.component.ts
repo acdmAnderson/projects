@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       lastName: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -36,16 +36,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.unsubscribeAll.complete();
   }
 
-  public createUser(data: User): void {
+  public createUser(user: User): void {
     this.userService
-      .createUser(data)
+      .createUser(user)
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe((res: FetchResult<User>) => {
         console.log(res.data);
         this.redirectToLogin();
       }, (error: any) => {
         console.log(error);
-      });    
+      });
   }
 
   public cancel(): void {
