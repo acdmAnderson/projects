@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit, OnDestroy {
 
   public loginForm: FormGroup;
+  public hasError = false;
+  public readonly feedback = 'Email ou Senha incorretos';
 
   //private
   private unsubscribeAll: Subject<any>;
@@ -29,12 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    this.authService.isLogged()
-    .subscribe((canLogin: boolean) => {
-      if(canLogin){
-        this.doNavigate();
-      }
-    })
+    if (this.authService.isLogged()) this.doNavigate();
   }
 
   ngOnDestroy(): void {
@@ -45,10 +42,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login(value: Login): void {
     this.authService.doLogin(value)
       .subscribe((canLogin: boolean) => {
-        if (canLogin) {
-          this.doNavigate();
-        }
-      },(error: any) => console.error(error));
+        if (canLogin) this.doNavigate();
+      }, () => this.hasError = true);
   }
 
   private async doNavigate(): Promise<void> {

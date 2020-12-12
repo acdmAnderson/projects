@@ -17,3 +17,7 @@ img.avatar {
 button{
   width: 100%;
 }
+
+.feedback-error{
+  color: #db124e;
+}

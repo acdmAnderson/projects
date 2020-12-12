@@ -7,6 +7,7 @@ import { AuthToken } from 'src/app/models/token.model';
 import { UserService } from '../user/user.service';
 import * as JwtDecode from 'jwt-decode';
 import { AUTH_TOKEN } from 'src/properties';
+import { UserToken } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,6 @@ export class AuthService {
         .subscribe((res: FetchResult<AuthToken>) => {
           const { login } = res.data;
           this.storageSession(login);
-          console.log(this.userLogged);
           observer.next(true);
           observer.complete();
         }, (error: any) => {
@@ -33,22 +33,28 @@ export class AuthService {
     });
   }
 
-  private decodeToken({ access_token }): User {
+  private decodeToken({ access_token }): UserToken {
     return JwtDecode.default(access_token);
   }
+
   private storageSession({ access_token }): void {
     localStorage.setItem(AUTH_TOKEN, JSON.stringify(access_token));
   }
 
-  public isLogged(): Observable<boolean> {
-    return new Observable<boolean>((observer) => {
-      observer.next(this.storegeToken ? true : false);
-      observer.complete();
-    });
+  public isLogged():boolean {
+    return this.validToken(this.storegeToken);
   }
 
-  public get storegeToken(): string{
-    return JSON.parse(localStorage.getItem(AUTH_TOKEN));
+  private validToken(token: any): boolean {
+    if (!token) return false;
+    const { exp } = this.decodeToken({ access_token: token });
+    return exp <= Date.now();
+  }
+
+  public get storegeToken(): any {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    if (!token) return null;
+    return token;
   }
 
   public handleRoute(path: string): void {
@@ -60,7 +66,7 @@ export class AuthService {
     this.handleRoute('/login');
   }
 
-  public get userLogged(): User{
-    return this.decodeToken({access_token: this.storegeToken});
+  public get userLogged(): User {
+    return this.decodeToken({ access_token: this.storegeToken });
   }
 }

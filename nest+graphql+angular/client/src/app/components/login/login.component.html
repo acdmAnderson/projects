@@ -8,6 +8,9 @@
             <input placeholder="Entre com seu email" formControlName="email" type="text" />
             <label for="password">Password</label>
             <input placeholder="Entre com a sua senha" type="password" formControlName="password" />
+            <span *ngIf="hasError" class="feedback-error">
+                <small>{{ feedback }}</small>
+            </span>
             <button [disabled]="!loginForm.valid" (click)="login(loginForm.value)"class="btn" type="button">Logar</button>
             <div>
                 <span class="accout-link">
