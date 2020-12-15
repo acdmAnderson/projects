@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser, Public } from 'src/properties';
+import { BcryptPipe } from 'src/transform/bcrypt.pipe';
 import { UserDTO } from './models/user.dto';
 import { UserService } from './user.service';
 
@@ -24,7 +25,7 @@ export class UserResolver {
 
     @Mutation()
     @Public()
-    async createUser(@Args('createUserInput') user: UserDTO): Promise<UserDTO> {
+    async createUser(@Args('createUserInput', new BcryptPipe()) user: UserDTO): Promise<UserDTO> {
         return this.userService.save({ ...user });
     }
 
