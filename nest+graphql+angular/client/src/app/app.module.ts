@@ -9,6 +9,7 @@ import { RegisterModule } from './components/register/register.module';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { PasswordModule } from './components/password/password.module';
 
 
 @NgModule({
@@ -17,10 +18,19 @@ import { AuthInterceptor } from './auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     LoginModule,
-    RegisterModule, GraphQLModule, HttpClientModule
+    RegisterModule,
+    GraphQLModule,
+    HttpClientModule,
+    PasswordModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
