@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
+import { ChangePasswordComponent } from './components/password/change-password/change-password.component';
 import { AuthGuard } from './services/guard/auth.guard';
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'change/password',
+    component: ChangePasswordComponent
   }
 ];
 
