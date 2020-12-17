@@ -9,6 +9,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   public changePasswordForm: FormGroup;
+  public hasError = false;
+  public readonly errorMessage = 'Senhas diferentes!'
 
   constructor() { }
 
@@ -23,6 +25,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { }
 
   public change({ password, checkPassword }): void {
+    if (password !== checkPassword) {
+      this.hasError = true;
+    }
     console.log(password, checkPassword);
   }
 
