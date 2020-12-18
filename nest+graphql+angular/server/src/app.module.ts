@@ -7,11 +7,15 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { PasswordModule } from './password/password.module';
 
 @Module({
   imports: [
     UserModule,
     AuthModule,
+    PasswordModule,
     ConfigModule.forRoot(
       {
         isGlobal: true,
@@ -36,8 +40,31 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     }),
     GraphQLModule.forRoot({
       debug: false,
-     typePaths: ['./**/*.graphql']
+      typePaths: ['./**/*.graphql']
     }),
+    MailerModule.forRootAsync({
+      useFactory: () => ({
+        transport: {
+          host: 'smtp.ethereal.email',
+          port: 587,
+          secure: 'STARTTLS', // upgrade later with STARTTLS
+          auth: {
+            user: 'rosa38@ethereal.email',
+            pass: '7SDXVqZFhBMR8ebnjc',
+          },
+        },
+        defaults: {
+          from:'"nest-modules" <modules@nestjs.com>',
+        },
+        template: {
+          dir: process.cwd() + '/templates/',
+          adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+          options: {
+            strict: true,
+          },
+        },
+      })
+    })
   ],
   providers: [
     {

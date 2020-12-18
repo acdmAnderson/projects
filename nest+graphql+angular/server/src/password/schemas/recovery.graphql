@@ -1,0 +1,7 @@
+type Mutation {
+    send(email: String!):Success
+}
+
+type Success {
+    completed: Boolean!
+}
