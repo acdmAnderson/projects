@@ -43,14 +43,15 @@ import { PasswordModule } from './password/password.module';
       typePaths: ['./**/*.graphql']
     }),
     MailerModule.forRootAsync({
-      useFactory: () => ({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
         transport: {
-          host: 'smtp.ethereal.email',
-          port: 587,
-          secure: 'STARTTLS', // upgrade later with STARTTLS
+          host: configService.get('HOST_MAILER'),
+          port: configService.get('PORT_MAILER') as number,
+          secure: false, // upgrade later with STARTTLS
           auth: {
-            user: 'rosa38@ethereal.email',
-            pass: '7SDXVqZFhBMR8ebnjc',
+            user: configService.get('USER_MAILER'),
+            pass: configService.get('PASS_MAILER'),
           },
         },
         defaults: {
@@ -63,7 +64,8 @@ import { PasswordModule } from './password/password.module';
             strict: true,
           },
         },
-      })
+      }),
+      inject: [ConfigService]
     })
   ],
   providers: [
