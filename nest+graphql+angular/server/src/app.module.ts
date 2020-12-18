@@ -59,7 +59,7 @@ import { PasswordModule } from './password/password.module';
         },
         template: {
           dir: process.cwd() + '/templates/',
-          adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+          adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
           },
