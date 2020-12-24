@@ -18,7 +18,7 @@ export class PasswordService {
     return new Observable((observer) => {
       this.createPasswordRecoveryToken(email)
         .then((value: { token: string }) => {
-          if (value !== null) {
+          if (value) {
             this.send(email, value.token)
               .then(() => {
                 observer.next({ completed: true })

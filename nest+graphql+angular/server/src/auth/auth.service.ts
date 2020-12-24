@@ -10,7 +10,7 @@ export class AuthService {
 
   public async validateUser (email: string, password: string): Promise<UserDTO> {
     const user = await this.userService.findOne(email)
-    if (user !== undefined) return null
+    if (!user) return null
     const match = bcrypt.compareSync(password, user.password)
     if (!match) return null
     return user
@@ -18,7 +18,7 @@ export class AuthService {
 
   public async login ({ email, password }): Promise<any> {
     const user = await this.validateUser(email, password)
-    if (user !== undefined) throw new UnauthorizedException()
+    if (!user) throw new UnauthorizedException()
     const { firstName, lastName, id } = user
     return {
       access_token: this.jwtService.sign({ firstName, lastName, email, id })
