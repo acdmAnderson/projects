@@ -14,7 +14,8 @@ export class SingUpResolver implements Controller {
       for (const field of this.requiredFields) {
         if (!httpRequest.body[field]) return badRequest(new MissingFieldError(field))
       }
-      const isValid = this.emailValidator.isValid(httpRequest.body.email)
+      const { email } = httpRequest.body
+      const isValid = this.emailValidator.isValid(email)
       if (!isValid) return badRequest(new InvalidFieldError('email'))
     } catch (error) {
       return serverError()
