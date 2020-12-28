@@ -3,12 +3,10 @@ import { MissingFieldError } from '../error/missing-field.error'
 import { badRequest } from '../helpers/http.helper'
 
 export class SingUpResolver {
+  private readonly requiredFields = ['fistName', 'lastName']
   handle (httpRequest: HttpRequest): HttpResponse {
-    if (!httpRequest.body.fistName) {
-      return badRequest(new MissingFieldError('fistName'))
-    }
-    if (!httpRequest.body.lastName) {
-      return badRequest(new MissingFieldError('lastName'))
+    for (const field of this.requiredFields) {
+      if (!httpRequest.body[field]) return badRequest(new MissingFieldError(field))
     }
   }
 }
