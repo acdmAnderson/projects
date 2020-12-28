@@ -22,7 +22,7 @@ describe('Sign Up Resolver', () => {
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
-        email: 'any_email',
+        email: 'any_email@email.com',
         password: 'any_password',
         isActive: true
       }
@@ -45,5 +45,20 @@ describe('Sign Up Resolver', () => {
     const httpResponse = rut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('email'))
+  })
+
+  test('Should return an 400 if no password is provided', () => {
+    const rut = new SingUpResolver()
+    const httpRequest = {
+      body: {
+        fistName: 'any_fistName',
+        lastName: 'any_lastName',
+        email: 'any_email@email.com',
+        isActive: true
+      }
+    }
+    const httpResponse = rut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingFieldError('password'))
   })
 })
