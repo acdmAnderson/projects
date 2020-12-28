@@ -1,5 +1,5 @@
 import { EmailValidator } from '../contracts'
-import { InvalidFieldError, MissingFieldError } from '../error'
+import { InvalidFieldError, MissingFieldError, ServerError } from '../error'
 import { SingUpResolver } from './signup'
 
 interface SutTypes {
@@ -110,5 +110,24 @@ describe('Sign Up Resolver', () => {
     }
     sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
+  })
+
+  test('Should return an 500 if EmailValidator throws', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementation(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        fistName: 'any_fistName',
+        lastName: 'any_lastName',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        isActive: true
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
