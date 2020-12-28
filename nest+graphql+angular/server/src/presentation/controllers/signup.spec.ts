@@ -1,9 +1,13 @@
 import { MissingFieldError } from '../error/missing-field.error'
 import { SingUpResolver } from './signup'
 
+const makeSut = (): SingUpResolver => {
+  return new SingUpResolver()
+}
+
 describe('Sign Up Resolver', () => {
   test('Should return an 400 if no fistName is provided', () => {
-    const rut = new SingUpResolver()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         lastName: 'any_lastName',
@@ -12,13 +16,13 @@ describe('Sign Up Resolver', () => {
         isActive: true
       }
     }
-    const httpResponse = rut.handle(httpRequest)
+    const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('fistName'))
   })
 
   test('Should return an 400 if no lastName is provided', () => {
-    const rut = new SingUpResolver()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -27,13 +31,13 @@ describe('Sign Up Resolver', () => {
         isActive: true
       }
     }
-    const httpResponse = rut.handle(httpRequest)
+    const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('lastName'))
   })
 
   test('Should return an 400 if no email is provided', () => {
-    const rut = new SingUpResolver()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -42,13 +46,13 @@ describe('Sign Up Resolver', () => {
         isActive: true
       }
     }
-    const httpResponse = rut.handle(httpRequest)
+    const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('email'))
   })
 
   test('Should return an 400 if no password is provided', () => {
-    const rut = new SingUpResolver()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -57,7 +61,7 @@ describe('Sign Up Resolver', () => {
         isActive: true
       }
     }
-    const httpResponse = rut.handle(httpRequest)
+    const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('password'))
   })
