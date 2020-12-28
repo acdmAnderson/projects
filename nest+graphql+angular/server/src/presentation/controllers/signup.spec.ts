@@ -1,3 +1,4 @@
+import { MissingFieldError } from '../error/missing-field.error'
 import { SingUpResolver } from './signup'
 
 describe('Sign Up Resolver', () => {
@@ -13,7 +14,7 @@ describe('Sign Up Resolver', () => {
     }
     const httpResponse = rut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Field fistName shold be prodided'))
+    expect(httpResponse.body).toEqual(new MissingFieldError('fistName'))
   })
 
   test('Shold return an 400 if no lastName is provided', () => {
@@ -28,6 +29,6 @@ describe('Sign Up Resolver', () => {
     }
     const httpResponse = rut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Field lastName shold be prodided'))
+    expect(httpResponse.body).toEqual(new MissingFieldError('lastName'))
   })
 })
