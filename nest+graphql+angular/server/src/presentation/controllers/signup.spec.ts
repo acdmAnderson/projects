@@ -95,4 +95,20 @@ describe('Sign Up Resolver', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidFieldError('email'))
   })
+
+  test('Should call EmailValidator with correct email', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
+    const httpRequest = {
+      body: {
+        fistName: 'any_fistName',
+        lastName: 'any_lastName',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        isActive: true
+      }
+    }
+    sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
+  })
 })
