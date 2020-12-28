@@ -1,13 +1,26 @@
-import { MissingFieldError } from '../error/missing-field.error'
+import { EmailValidator } from '../contracts'
+import { InvalidFieldError, MissingFieldError } from '../error'
 import { SingUpResolver } from './signup'
 
-const makeSut = (): SingUpResolver => {
-  return new SingUpResolver()
+interface SutTypes {
+  sut: SingUpResolver
+  emailValidatorStub: EmailValidator
+}
+
+const makeSut = (): SutTypes => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      return true
+    }
+  }
+  const emailValidatorStub = new EmailValidatorStub()
+  const sut = new SingUpResolver(emailValidatorStub)
+  return { sut, emailValidatorStub }
 }
 
 describe('Sign Up Resolver', () => {
   test('Should return an 400 if no fistName is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         lastName: 'any_lastName',
@@ -22,7 +35,7 @@ describe('Sign Up Resolver', () => {
   })
 
   test('Should return an 400 if no lastName is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -37,7 +50,7 @@ describe('Sign Up Resolver', () => {
   })
 
   test('Should return an 400 if no email is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -52,7 +65,7 @@ describe('Sign Up Resolver', () => {
   })
 
   test('Should return an 400 if no password is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         fistName: 'any_fistName',
@@ -64,5 +77,22 @@ describe('Sign Up Resolver', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFieldError('password'))
+  })
+
+  test('Should return an 400 if an invalid email is provided', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpRequest = {
+      body: {
+        fistName: 'any_fistName',
+        lastName: 'any_lastName',
+        email: 'invalid_email@email.com',
+        password: 'any_password',
+        isActive: true
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidFieldError('email'))
   })
 })
