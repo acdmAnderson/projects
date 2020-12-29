@@ -1,8 +1,6 @@
-import { AccountModel } from '../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account'
-import { EmailValidator } from '../contracts'
-import { InvalidFieldError, MissingFieldError, ServerError } from '../error'
+import { InvalidFieldError, MissingFieldError, ServerError } from '../../error'
 import { SingUpResolver } from './signup'
+import { AccountModel, AddAccount, EmailValidator, AddAccountModel } from './signup-contracts'
 
 interface SutTypes {
   sut: SingUpResolver
