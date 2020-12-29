@@ -17,12 +17,16 @@ export class SingUpResolver implements Controller {
       const { email, firstName, lastName, password } = httpRequest.body
       const isValid = this.emailValidator.isValid(email)
       if (!isValid) return badRequest(new InvalidFieldError('email'))
-      this.addAccount.add({
+      const account = this.addAccount.add({
         email,
         firstName,
         lastName,
         password
       })
+      return {
+        statusCode: 200,
+        body: account
+      }
     } catch (error) {
       return serverError()
     }
