@@ -1,11 +1,12 @@
+import { AddAccount } from 'src/domain/usecases/add-account'
 import { EmailValidator, Controller } from '../contracts'
 import { HttpRequest, HttpResponse } from '../contracts/http'
 import { InvalidFieldError, MissingFieldError } from '../error'
 import { badRequest, serverError } from '../helpers/http.helper'
 
 export class SingUpResolver implements Controller {
-  private readonly requiredFields = ['fistName', 'lastName', 'email', 'password']
-  constructor (private readonly emailValidator: EmailValidator) {
+  private readonly requiredFields = ['firstName', 'lastName', 'email', 'password']
+  constructor (private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount) {
 
   }
 
@@ -14,9 +15,15 @@ export class SingUpResolver implements Controller {
       for (const field of this.requiredFields) {
         if (!httpRequest.body[field]) return badRequest(new MissingFieldError(field))
       }
-      const { email } = httpRequest.body
+      const { email, firstName, lastName, password } = httpRequest.body
       const isValid = this.emailValidator.isValid(email)
       if (!isValid) return badRequest(new InvalidFieldError('email'))
+      this.addAccount.add({
+        email,
+        firstName,
+        lastName,
+        password
+      })
     } catch (error) {
       return serverError()
     }
