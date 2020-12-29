@@ -1,7 +1,8 @@
 import { AddAccount } from 'src/domain/usecases/add-account'
 import { Controller, HttpResponse, HttpRequest, EmailValidator } from './signup-contracts'
 import { InvalidFieldError, MissingFieldError } from '../../error'
-import { badRequest, serverError } from '../../helpers/http.helper'
+import { badRequest, ok, serverError } from '../../helpers/http.helper'
+import { AccountModel } from 'src/domain/models/account'
 
 export class SingUpResolver implements Controller {
   private readonly requiredFields = ['firstName', 'lastName', 'email', 'password']
@@ -23,10 +24,7 @@ export class SingUpResolver implements Controller {
         lastName,
         password
       })
-      return {
-        statusCode: 200,
-        body: account
-      }
+      return ok<AccountModel>(account)
     } catch (error) {
       return serverError()
     }
