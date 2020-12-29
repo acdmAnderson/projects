@@ -9,7 +9,7 @@ export class SingUpResolver implements Controller {
 
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       for (const field of this.requiredFields) {
         if (!httpRequest.body[field]) return badRequest(new MissingFieldError(field))
@@ -17,7 +17,7 @@ export class SingUpResolver implements Controller {
       const { email, firstName, lastName, password } = httpRequest.body
       const isValid = this.emailValidator.isValid(email)
       if (!isValid) return badRequest(new InvalidFieldError('email'))
-      const account = this.addAccount.add({
+      const account = await this.addAccount.add({
         email,
         firstName,
         lastName,
