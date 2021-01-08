@@ -1,4 +1,4 @@
-import { Encrypter } from 'src/data/contracts/encrypter'
+import { Encrypter } from './db-add-account-contracts'
 import { DbAddAccount } from './db-add-account'
 
 interface SutTypes {
