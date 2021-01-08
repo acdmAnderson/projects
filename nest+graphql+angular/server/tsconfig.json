@@ -23,7 +23,7 @@
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true
