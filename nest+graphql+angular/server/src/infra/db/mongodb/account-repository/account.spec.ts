@@ -13,8 +13,12 @@ describe('Account Mongo Repository', () => {
     await MongoHelper.getCollection('account').deleteMany({})
   })
 
+  const makeSut = (): AccountMongoRepository => {
+    return new AccountMongoRepository()
+  }
+
   test('Should return an account on success', async () => {
-    const sut = new AccountMongoRepository()
+    const sut = makeSut()
     const account = await sut.add({
       firstName: 'any_firstName',
       lastName: 'any_lastName',
