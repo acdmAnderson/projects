@@ -14,5 +14,10 @@ export const MongoHelper = {
 
   getCollection (name: string): Collection {
     return this.client.db().collection(name)
+  },
+
+  map: function<T = any> (collection: any): T {
+    const { _id, ...collectionWithoutId } = collection
+    return { ...collectionWithoutId, id: _id }
   }
 }
