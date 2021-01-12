@@ -9,8 +9,9 @@ describe('Account Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
-  afterEach(async () => {
-    await MongoHelper.getCollection('account').deleteMany({})
+  beforeEach(async () => {
+    const accountCollection = MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
   })
 
   const makeSut = (): AccountMongoRepository => {
