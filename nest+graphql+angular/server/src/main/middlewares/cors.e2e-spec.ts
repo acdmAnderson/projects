@@ -1,4 +1,4 @@
-import { Controller, INestApplication, Post, Req, Res } from '@nestjs/common'
+import { Controller, Get, INestApplication, Req, Res } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { AppModule } from '../../app.module'
 import request from 'supertest'
@@ -8,8 +8,8 @@ import setupMiddlewares from '../config/middlewares'
 
 describe('CORS Middleware', () => {
   @Controller()
-  class TestBodyParserController {
-    @Post('/test_cors')
+  class TestCorsController {
+    @Get('/test_cors')
     @Public()
     async handle (@Req() req: Request, @Res() res: Response): Promise<void> {
       res.send()
@@ -19,13 +19,18 @@ describe('CORS Middleware', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      controllers: [TestBodyParserController]
+      controllers: [TestCorsController]
     }).compile()
 
     app = moduleFixture.createNestApplication()
     setupMiddlewares(app)
     await app.init()
   })
+
+  afterEach(async () => {
+    await app.close()
+  })
+
   test('Should enable CORS', async () => {
     await request(app.getHttpServer())
       .get('/test_cors')

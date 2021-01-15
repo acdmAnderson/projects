@@ -26,6 +26,11 @@ describe('Body Parser Middleware', () => {
     setupMiddlewares(app)
     await app.init()
   })
+
+  afterEach(async () => {
+    await app.close()
+  })
+
   test('Should parse body as json', async () => {
     await request(app.getHttpServer())
       .post('/test_body_parser')
