@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CurrentUser, Public } from 'src/properties'
-import { BcryptPipe } from 'src/transform/bcrypt.pipe'
+import { CurrentUser, Public } from '../properties'
+import { BcryptPipe } from '../transform/bcrypt.pipe'
 import { UserDTO } from './models/user.dto'
 import { UserService } from './user.service'
 

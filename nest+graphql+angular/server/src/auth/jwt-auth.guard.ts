@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthGuard } from '@nestjs/passport'
 import { Observable } from 'rxjs'
-import { IS_PUBLIC_KEY } from 'src/properties'
+import { IS_PUBLIC_KEY } from '../properties'
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

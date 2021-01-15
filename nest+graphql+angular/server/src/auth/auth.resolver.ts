@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import { Public } from 'src/properties'
-import { UserDTO } from 'src/users/models/user.dto'
+import { Public } from '../properties'
+import { UserDTO } from '../users/models/user.dto'
 import { AuthService } from './auth.service'
 import { LoginDTO } from './models/login.dto'
 

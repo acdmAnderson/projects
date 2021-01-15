@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer'
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Observable } from 'rxjs'
-import { UserService } from 'src/users/user.service'
+import { UserService } from '../users/user.service'
 
 @Injectable()
 export class PasswordService {

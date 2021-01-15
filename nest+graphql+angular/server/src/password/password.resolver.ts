@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import { Public } from 'src/properties'
+import { Public } from '../properties'
 import { PasswordService } from './password.service'
 
 @Resolver('Password')

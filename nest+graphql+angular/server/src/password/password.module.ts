@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { PasswordService } from './password.service'
 import { PasswordResolver } from './password.resolver'
-import { UserModule } from 'src/users/user.module'
+import { UserModule } from '../users/user.module'
 import { JwtModule } from '@nestjs/jwt'
-import { jwtSecret } from 'src/auth/jwt'
+import { jwtSecret } from '../auth/jwt'
 
 @Module({
   imports: [
