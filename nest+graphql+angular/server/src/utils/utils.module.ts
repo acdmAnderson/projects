@@ -6,7 +6,7 @@ import { EmailValidatorAdapter } from './email-validator-adapter'
   providers: [
     {
       provide: EmailValidator,
-      useValue: EmailValidatorAdapter
+      useClass: EmailValidatorAdapter
     }
   ]
 })

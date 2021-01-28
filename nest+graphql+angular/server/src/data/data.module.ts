@@ -5,7 +5,7 @@ import { DbAddAccount } from './usecases/add-account/db-add-account'
   providers: [
     {
       provide: AddAccount,
-      useValue: DbAddAccount
+      useClass: DbAddAccount
     }
   ]
 })
