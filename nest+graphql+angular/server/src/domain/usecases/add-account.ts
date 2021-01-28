@@ -7,6 +7,6 @@ export interface AddAccountModel {
   password: string
 }
 
-export interface AddAccount {
-  add: (account: AddAccountModel) => Promise<AccountModel>
+export abstract class AddAccount {
+  abstract add (account: AddAccountModel): Promise<AccountModel>
 }

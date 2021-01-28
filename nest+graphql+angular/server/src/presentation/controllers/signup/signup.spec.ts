@@ -9,7 +9,11 @@ interface SutTypes {
 }
 
 const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
+  class EmailValidatorStub extends EmailValidator {
+    constructor () {
+      super()
+    }
+
     isValid (email: string): boolean {
       return true
     }
@@ -18,7 +22,11 @@ const makeEmailValidator = (): EmailValidator => {
 }
 
 const makeAddAccount = (): AddAccount => {
-  class AddAccountStub implements AddAccount {
+  class AddAccountStub extends AddAccount {
+    constructor () {
+      super()
+    }
+
     async add (account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
         id: 1,
