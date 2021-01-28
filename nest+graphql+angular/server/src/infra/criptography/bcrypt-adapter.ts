@@ -1,9 +1,11 @@
 import { Encrypter } from '../../data/contracts/encrypter'
 import bcrypt from 'bcrypt'
-
-export class BcryptAdapter implements Encrypter {
+import { Injectable } from '@nestjs/common'
+@Injectable()
+export class BcryptAdapter extends Encrypter {
   private readonly salt: number
   constructor (salt: number) {
+    super()
     this.salt = salt
   }
 

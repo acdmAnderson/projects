@@ -1,3 +1,3 @@
-export interface Encrypter {
-  encrypt: (value: string) => Promise<string>
+export abstract class Encrypter {
+  abstract encrypt (value: string): Promise<string>
 }
