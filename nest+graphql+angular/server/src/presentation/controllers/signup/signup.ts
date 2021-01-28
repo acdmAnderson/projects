@@ -1,8 +1,8 @@
-import { AddAccount } from 'src/domain/usecases/add-account'
+import { AddAccount } from '../../../domain/usecases/add-account'
 import { Controller, HttpResponse, HttpRequest, EmailValidator } from './signup-contracts'
 import { InvalidFieldError, MissingFieldError } from '../../error'
 import { badRequest, ok, serverError } from '../../helpers/http.helper'
-import { AccountModel } from 'src/domain/models/account'
+import { AccountModel } from '../../../domain/models/account'
 
 export class SingUpResolver implements Controller {
   private readonly requiredFields = ['firstName', 'lastName', 'email', 'password']
