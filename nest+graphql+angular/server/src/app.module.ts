@@ -13,6 +13,7 @@ import { PasswordModule } from './password/password.module'
 import { UtilsModule } from './utils/utils.module'
 import { PresentationModule } from './presentation/presentation.module'
 import { DataModule } from './data/data.module'
+import { InfraModule } from './infra/infra.module'
 
 @Module({
   imports: [
@@ -72,7 +73,8 @@ import { DataModule } from './data/data.module'
     }),
     UtilsModule,
     PresentationModule,
-    DataModule
+    DataModule,
+    InfraModule
   ],
   providers: [
     {
