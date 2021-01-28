@@ -12,6 +12,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { PasswordModule } from './password/password.module'
 import { UtilsModule } from './utils/utils.module'
 import { PresentationModule } from './presentation/presentation.module'
+import { DataModule } from './data/data.module'
 
 @Module({
   imports: [
@@ -70,7 +71,8 @@ import { PresentationModule } from './presentation/presentation.module'
       inject: [ConfigService]
     }),
     UtilsModule,
-    PresentationModule
+    PresentationModule,
+    DataModule
   ],
   providers: [
     {
