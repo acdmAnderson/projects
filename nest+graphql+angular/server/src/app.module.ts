@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
 import { PasswordModule } from './password/password.module'
+import { UtilsModule } from './utils/utils.module'
 
 @Module({
   imports: [
@@ -66,7 +67,8 @@ import { PasswordModule } from './password/password.module'
         }
       }),
       inject: [ConfigService]
-    })
+    }),
+    UtilsModule
   ],
   providers: [
     {

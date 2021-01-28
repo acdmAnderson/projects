@@ -1,15 +1,16 @@
-import { EmailValidatorAdapter } from './email-validator-adapter'
+import { EmailValidator } from '../presentation/contracts'
 import validator from 'validator'
+import { EmailValidatorAdapter } from './email-validator-adapter'
 
 jest.mock('validator', () => ({
   isEmail (): boolean {
     return true
   }
 }))
-const makeSut = (): EmailValidatorAdapter => {
-  return new EmailValidatorAdapter()
-}
 describe('EmailValidator Adapter', () => {
+  const makeSut = (): EmailValidator => {
+    return new EmailValidatorAdapter()
+  }
   test('Should return false if validator returns false', () => {
     const sut = makeSut()
     jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)

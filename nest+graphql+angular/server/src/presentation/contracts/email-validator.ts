@@ -1,3 +1,3 @@
-export interface EmailValidator {
-  isValid: (email: string) => boolean
+export abstract class EmailValidator {
+  abstract isValid (email: string): boolean
 }
